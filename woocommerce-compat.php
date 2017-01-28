@@ -23,7 +23,7 @@ class WooCommerce_Compat_1_0 {
 	 * @param object $object Any WooCommerce object that has an ID (available via either a get_id() method or an id property)
 	 */
 	public function get_id($object) {
-		return method_exists($object, 'get_id') ? $object->get_id() : $object->id;
+		return is_callable(array($object, 'get_id')) ? $object->get_id() : $object->id;
 	}
 	
 	/** 
@@ -56,6 +56,31 @@ class WooCommerce_Compat_1_0 {
 		$price = isset($args['price']) ? $args['price'] : '';
 		
 		return $product->get_price_excluding_tax($qty, $price);
+	}
+	
+	/**
+	 * Update meta data by key or ID, if provided.
+	 * 
+	 * This function can be called on any WC_Data object (e.g. a WC_Product, WC_Order). It is intended to replace calls to update_post_meta(). It does not support the fourth parameter ($meta_id) of WC_Data::update_meta_data, as there is no legacy equivalent.
+	 * 
+	 * Currently, only WC_Order objects are supported on WC < 2.7.
+	 * 
+	 * @param string $object
+	 * @param string $key
+	 * @param string $value
+	 * 
+	 * @return void 
+	 */
+	public function update_meta_data($object, $key, $value) {
+		if (is_callable($object, 'update_meta_data')) {
+			$meta_id = '';
+			$object->update_meta_data($key, $value, $meta_id);
+		}
+		if (is_a($object, 'WC_Order')) {
+			update_post_meta($this->get_id($object), $key, $value);
+		} else {
+			throw new Exception('woocommerce-compat: unknown object type: '.gettype($object));
+		}
 	}
 
 }
