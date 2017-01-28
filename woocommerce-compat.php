@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) die('No direct access.');
 
 /*
 
-WooCommerce compatibility library.
+WooCommerce compatibility library, version 1.0
 
 Get full/current info at:
 https://github.com/DavidAnderson684/woocommerce-compat/
