@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) die('No direct access.');
 
 /*
 
-WooCommerce compatibility library, version 1.1.0
+WooCommerce compatibility library, version 0.2.0
 
 Get full/current info at:
 https://github.com/DavidAnderson684/woocommerce-compat/
@@ -14,8 +14,8 @@ Licenced according to the MIT Licence; see the file LICENCE
 
 */
 
-if (!class_exists('WooCommerce_Compat_1_1')):
-class WooCommerce_Compat_1_1 {
+if (!class_exists('WooCommerce_Compat_0_2')):
+class WooCommerce_Compat_0_2 {
 
 	/**
 	 * Get the ID of a passed object. This function abstracts the difference between objects with the get_id() method from WC 2.7 onwards, and before when the property was accessed directly.
@@ -88,7 +88,7 @@ class WooCommerce_Compat_1_1 {
 	 * 
 	 * Currently, only WC_Order objects are supported on WC < 2.7.
 	 * 
-	 * @since  1.1.0
+	 * @since  0.2.0
 	 * @param  string $object
 	 * @param  string $key
 	 * @param  bool $single return first found meta with key, or all with $key
