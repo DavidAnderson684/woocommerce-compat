@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) die('No direct access.');
 
 /*
 
-WooCommerce compatibility library, version 1.0
+WooCommerce compatibility library, version 1.1.0
 
 Get full/current info at:
 https://github.com/DavidAnderson684/woocommerce-compat/
@@ -14,8 +14,8 @@ Licenced according to the MIT Licence; see the file LICENCE
 
 */
 
-if (!class_exists('WooCommerce_Compat_1_0')):
-class WooCommerce_Compat_1_0 {
+if (!class_exists('WooCommerce_Compat_1_1')):
+class WooCommerce_Compat_1_1 {
 
 	/**
 	 * Get the ID of a passed object. This function abstracts the difference between objects with the get_id() method from WC 2.7 onwards, and before when the property was accessed directly.
@@ -81,6 +81,25 @@ class WooCommerce_Compat_1_0 {
 		} else {
 			throw new Exception('woocommerce-compat: unknown object type: '.gettype($object));
 		}
+	}
+	
+	/**
+	 * Get meta data by key
+	 * 
+	 * Currently, only WC_Order objects are supported on WC < 2.7.
+	 * 
+	 * @since  1.1.0
+	 * @param  string $object
+	 * @param  string $key
+	 * @param  bool $single return first found meta with key, or all with $key
+	 * @param  string $context What the value is for. Valid values are view and edit. This is only used on WC 2.7+, and (in the current code) causes WC to run a filter on what is fetched.
+	 * @return mixed
+	 */
+	public function get_meta($object, $key = '', $single = true, $context = 'view') {
+		if (is_callable($object, 'get_meta')) {
+			return $object->get_meta($key, $single, $context);
+		}
+		return get_post_meta($this->get_id($object), $key, $single);
 	}
 
 }

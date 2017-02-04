@@ -18,7 +18,7 @@ It is not my personal aim to create a comprehensive library. If you wish it to c
 
 ## Upgrading between versions
 
-- Any API-breaking changes will be accompanied by a bump in the class name, which includes the version number. Addition of new functionality will result in a bump. We will try to stick to semantic versioning (http://semver.org).
+- Any API-breaking changes will be accompanied by a bump in the class name, which includes the version number. Addition of new functionality will also result in a bump. We will try to stick to semantic versioning (http://semver.org).
 
 ## Etcetera
 
