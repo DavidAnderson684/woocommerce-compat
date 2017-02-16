@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) die('No direct access.');
 
 /*
 
-WooCommerce compatibility library, version 0.3.1
+WooCommerce compatibility library, version 0.2.1
 
 Get full/current info at:
 https://github.com/DavidAnderson684/woocommerce-compat/
@@ -14,8 +14,8 @@ Licenced according to the MIT Licence; see the file LICENCE
 
 */
 
-if (!class_exists('WooCommerce_Compat_0_3')):
-class WooCommerce_Compat_0_3 {
+if (!class_exists('WooCommerce_Compat_0_2')):
+class WooCommerce_Compat_0_2 {
 
 	/**
 	 * Get the ID of a passed object. This function abstracts the difference between objects with the get_id() method from WC 2.7 onwards, and before when the property was accessed directly.
