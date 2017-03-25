@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) die('No direct access.');
 
 /*
 
-WooCommerce compatibility library, version 0.2.1
+WooCommerce compatibility library, version 0.2.2
 
 Get full/current info at:
 https://github.com/DavidAnderson684/woocommerce-compat/
@@ -97,7 +97,7 @@ class WooCommerce_Compat_0_2 {
 	 * @return mixed
 	 */
 	public function get_meta($object, $key = '', $single = true, $context = 'view') {
-		if (is_callable($object, 'get_meta')) {
+		if (is_callable(array($object, 'get_meta'))) {
 			return $object->get_meta($key, $single, $context);
 		}
 		return get_post_meta($this->get_id($object), $key, $single);
