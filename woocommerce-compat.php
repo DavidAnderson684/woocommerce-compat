@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) die('No direct access.');
 
 /*
 
-WooCommerce compatibility library, version 0.2.2
+WooCommerce compatibility library, version 0.3.0
 
 Get full/current info at:
 https://github.com/DavidAnderson684/woocommerce-compat/
@@ -14,8 +14,8 @@ Licenced according to the MIT Licence; see the file LICENCE
 
 */
 
-if (!class_exists('WooCommerce_Compat_0_2')):
-class WooCommerce_Compat_0_2 {
+if (!class_exists('WooCommerce_Compat_0_3')):
+class WooCommerce_Compat_0_3 {
 
 	/**
 	 * Get the ID of a passed object. This function abstracts the difference between objects with the get_id() method from WC 2.7 onwards, and before when the property was accessed directly.
@@ -101,6 +101,33 @@ class WooCommerce_Compat_0_2 {
 			return $object->get_meta($key, $single, $context);
 		}
 		return get_post_meta($this->get_id($object), $key, $single);
+	}
+	
+	/**
+	 * Get the order date
+	 *
+	 * @since 0.3.0
+	 *
+	 * @param WC_Order $order - the order object
+	 *
+	 * @return Integer - the date timestamp (epoch time)
+	 */
+	public function get_order_date($order) {
+	
+		if (version_compare(WC_VERSION, '2.7', '<')) return strtotime($order->completed_date);
+	
+		$try_these = array('completed', 'paid', 'created');
+	
+		$the_date = $order->get_date_completed();
+		if (null == $the_date) $the_date = $order->get_date_paid();
+		if (null == $the_date && is_callable(array($order, 'get_date_created'))) $the_date = $order->get_date_created();
+
+		if (is_object($the_date) && is_callable(array($the_date, 'getTimestamp'))) $the_date = $the_date->getTimestamp();
+
+		if (is_object($the_date)) $the_date = 0;
+		
+		return $the_date;
+	
 	}
 
 }
