@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) die('No direct access.');
 
 /*
 
-WooCommerce compatibility library, version 0.3.0
+WooCommerce compatibility library, version 0.3.1
 
 Get full/current info at:
 https://github.com/DavidAnderson684/woocommerce-compat/
@@ -76,6 +76,7 @@ class WooCommerce_Compat_0_3 {
 			$meta_id = '';
 			$object->update_meta_data($key, $value, $meta_id);
 			$object->save();
+			return;
 		}
 		if (is_a($object, 'WC_Order')) {
 			update_post_meta($this->get_id($object), $key, $value);
