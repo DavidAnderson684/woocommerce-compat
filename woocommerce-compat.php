@@ -4,7 +4,9 @@ if (!defined('ABSPATH')) die('No direct access.');
 
 /*
 
-WooCommerce compatibility library, version 0.3.1
+WooCommerce compatibility library, version 0.3.2
+
+Now considered deprecated: all method calls work as in previous 0.3 releases, but also error_log() with deprecation warnings at the "notice" level. WooCommerce 2.6 was released in April 2017 when the latest PHP version was 5.5; plugins should have moved to the WooCommerce CRUD interface. But logging deprecation warnings will help to ferret out any unintended remaining use.
 
 Get full/current info at:
 https://github.com/DavidAnderson684/woocommerce-compat/
@@ -23,6 +25,7 @@ class WooCommerce_Compat_0_3 {
 	 * @param object $object Any WooCommerce object that has an ID (available via either a get_id() method or an id property)
 	 */
 	public function get_id($object) {
+		trigger_error("WooCommerce_Compat_0_3::get_id() - this library is deprecated and you should change your code to stop using it", E_USER_NOTICE);
 		return is_callable(array($object, 'get_id')) ? $object->get_id() : $object->id;
 	}
 	
@@ -33,6 +36,8 @@ class WooCommerce_Compat_0_3 {
 	 * @param array $args - arguments. Valid keys for WC < 2.7 are 'qty' and 'price'. Others will be ignored on these versions.
 	 */
 	public function get_price_including_tax($product, $args = array()) {
+		trigger_error("WooCommerce_Compat_0_3::get_price_including_tax() - this library is deprecated and you should change your code to stop using it", E_USER_NOTICE);
+		
 		if (function_exists('wc_get_price_including_tax')) return wc_get_price_including_tax($product, $args);
 		
 		// Enforce the pre-WC-2.7 defaults
@@ -49,6 +54,9 @@ class WooCommerce_Compat_0_3 {
 	 * @param array $args - arguments. Valid keys for WC < 2.7 are 'qty' and 'price'. Others will be ignored on these versions.
 	 */
 	public function get_price_excluding_tax($product, $args = array()) {
+		
+		trigger_error("WooCommerce_Compat_0_3::get_price_excluding_tax() - this library is deprecated and you should change your code to stop using it", E_USER_NOTICE);
+		
 		if (function_exists('wc_get_price_excluding_tax')) return wc_get_price_excluding_tax($product, $args);
 		
 		// Enforce the pre-WC-2.7 defaults
@@ -72,8 +80,10 @@ class WooCommerce_Compat_0_3 {
 	 * @return void 
 	 */
 	public function update_meta_data($object, $key, $value) {
+		trigger_error("WooCommerce_Compat_0_3::update_meta_data() - this library is deprecated and you should change your code to stop using it", E_USER_NOTICE);
+		
 		if (is_callable($object, 'update_meta_data')) {
-			$meta_id = '';
+			$meta_id = 0;
 			$object->update_meta_data($key, $value, $meta_id);
 			$object->save();
 			return;
@@ -98,6 +108,7 @@ class WooCommerce_Compat_0_3 {
 	 * @return mixed
 	 */
 	public function get_meta($object, $key = '', $single = true, $context = 'view') {
+		trigger_error("WooCommerce_Compat_0_3::get_meta() - this library is deprecated and you should change your code to stop using it", E_USER_NOTICE);
 		if (is_callable(array($object, 'get_meta'))) {
 			return $object->get_meta($key, $single, $context);
 		}
@@ -115,6 +126,8 @@ class WooCommerce_Compat_0_3 {
 	 */
 	public function get_order_date($order) {
 	
+		trigger_error("WooCommerce_Compat_0_3::get_order_date() - this library is deprecated and you should change your code to stop using it", E_USER_NOTICE);
+		
 		if (version_compare(WC_VERSION, '2.7', '<')) return strtotime($order->completed_date);
 	
 		$try_these = array('completed', 'paid', 'created');
